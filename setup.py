@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-__author__ = 'iansparks'
+__author__ = 'isparks'
+
+import re
 from setuptools import setup
+
+init = open('requests-mauth/__init__.py').read()
+version = re.search("__version__ = '([^']+)'", init).group(1)
 
 setup(
     name='requests-mauth',
-    version='1.0.0',
+    version=version,
     author='Ian Sparks',
     author_email='isparks@mdsol.com',
-    packages=['pymauth_client'],
+    packages=['requests_mauth'],
     url='https://github.com/mdsol/requests-mauth',
     license='MIT',
     description="An MAuth client based around the excellent requests library.",

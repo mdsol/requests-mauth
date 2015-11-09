@@ -55,7 +55,12 @@ class MAuth(requests.auth.AuthBase):
         if seconds_since_epoch is None:
             seconds_since_epoch = int(time.time())
 
-        vals = dict(verb=verb, url_path=url_path, body=body or '', app_uid=self.app_uuid, seconds_since_epoch=seconds_since_epoch)
+        vals = dict(verb=verb,
+                    url_path=url_path,
+                    body=body or '',
+                    app_uid=self.app_uuid,
+                    seconds_since_epoch=seconds_since_epoch)
+
         string_to_sign = '{verb}\n{url_path}\n{body}\n{app_uid}\n{seconds_since_epoch!s}'.format(**vals)
         return string_to_sign, seconds_since_epoch
 

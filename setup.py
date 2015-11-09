@@ -4,7 +4,7 @@ __author__ = 'isparks'
 import re
 from setuptools import setup
 
-init = open('requests-mauth/__init__.py').read()
+init = open('requests_mauth/__init__.py').read()
 version = re.search("__version__ = '([^']+)'", init).group(1)
 
 setup(

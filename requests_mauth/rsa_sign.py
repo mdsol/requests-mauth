@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'isparks'
 
-#This module exists to reproduce, with the rsa library, the raw signature required by MAuth
-#which in OpenSSL is created with private_encrypt(hash). It provides an RSA sign class built from
-#code that came from https://www.dlitz.net/software/pycrypto/api/current/ no copyright of that original
-#code is claimed.
+# This module exists to reproduce, with the rsa library, the raw signature required by MAuth
+# which in OpenSSL is created with private_encrypt(hash). It provides an RSA sign class built from
+# code that came from https://www.dlitz.net/software/pycrypto/api/current/ no copyright of that original
+# code is claimed.
 
 from hashlib import sha512
 from rsa import common, core, transform, PrivateKey
@@ -58,7 +58,7 @@ class RSARawSigner(object):
         max_msglength = target_length - 11
         msglength = len(message)
 
-        if msglength > max_msglength:
+        if msglength > max_msglength: #pragma: no cover
             raise OverflowError('%i bytes needed for message, but there is only'
                 ' space for %i' % (msglength, max_msglength))
 

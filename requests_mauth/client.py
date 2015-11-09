@@ -2,49 +2,26 @@
 __author__ = 'isparks'
 
 import requests
-import datetime
 import time
-import hmac
-import hashlib
-import base64
 from rsa_sign import RSARawSigner
-
-SECONDS_IN_24_HOURS = 24 * 60 * 60
-
-def isodatetime(dt):
-    """Takes a date, returns ISO8601 date/time format"""
-    return dt.strftime('%Y-%m-%dT%H:%M:%S')
-
-def isodate(dt):
-    """Takes a date, returns ISO8601 date format"""
-    return dt.strftime('%Y-%m-%d')
-
+from urlparse import urlparse
 
 class MAuth(requests.auth.AuthBase):
     """Custom requests authorizer for MAuth"""
-    def __init__(self, base_url, app_uuid, private_key_data):
-        self.base_url = base_url
+    def __init__(self, app_uuid, private_key_data):
         self.app_uuid = app_uuid
         self.signer = RSARawSigner(private_key_data)
 
     def __call__(self, r):
-        """Call is made like:
-           requests.get(url, auth=MyAuth())
-        """
+        """Call override, the entrypoint for a custom auth object"""
         r.headers.update(self.make_headers(r))
         return r
 
-    def make_url(self, resource_url):
-        """
-        Return full URL
-        """
-        url = u"%s%s" % (self.base_url, resource_url,)
-        return url
-
     def make_headers(self, r):
         """Make headers for the request."""
-
-        signature, secs = self.make_signature_string(r.method, r.url, r.body)
+        # Split the path from the scheme, query string etc
+        url_path = urlparse(r.url).path
+        signature, secs = self.make_signature_string(r.method, url_path, r.body)
         signed = self.signer.sign(signature)
         headers = self.make_authentication_headers(signed, secs)
         return headers
@@ -59,7 +36,6 @@ class MAuth(requests.auth.AuthBase):
                 'X-MWS-Time' : str(seconds_since_epoch),
                 'Content-Type': 'application/json;charset=utf-8',
                 }
-        return headers
 
     def make_signature_string(self,  verb, url_path, body, seconds_since_epoch=None):
         """Makes a signature string for signing of the form:
@@ -79,9 +55,8 @@ class MAuth(requests.auth.AuthBase):
         if seconds_since_epoch is None:
             seconds_since_epoch = int(time.time())
 
-        vals = dict(verb=verb, url_path=url_path, body=body, app_uid=self.app_uuid, seconds_since_epoch=seconds_since_epoch)
+        vals = dict(verb=verb, url_path=url_path, body=body or '', app_uid=self.app_uuid, seconds_since_epoch=seconds_since_epoch)
         string_to_sign = '{verb}\n{url_path}\n{body}\n{app_uid}\n{seconds_since_epoch!s}'.format(**vals)
         return string_to_sign, seconds_since_epoch
-
 
 

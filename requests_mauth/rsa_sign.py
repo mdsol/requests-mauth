@@ -10,7 +10,6 @@ from hashlib import sha512
 from rsa import common, core, transform, PrivateKey
 import base64
 
-
 def make_bytes(val):
     """Ensure in python 2/3 we are working with bytes when we need to"""
     try:
@@ -31,8 +30,6 @@ class RSARawSigner(object):
 
     def sign(self, string_to_sign):
         """Sign the data in a emulation of the OpenSSL private_encrypt method"""
-        # Working in 2.7
-
         string_to_sign = make_bytes(string_to_sign)
         hashed = sha512(string_to_sign).hexdigest().encode('US-ASCII')
         keylength = common.byte_size(self.pk.n)

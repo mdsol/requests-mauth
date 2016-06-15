@@ -8,7 +8,7 @@ init = open('requests_mauth/__init__.py').read()
 version = re.search("__version__ = '([^']+)'", init).group(1)
 
 setup(
-    name='requests-mauth',
+    name='requests_mauth',
     version=version,
     author='Ian Sparks',
     author_email='isparks@mdsol.com',
@@ -21,6 +21,7 @@ setup(
     include_package_data=True,
     package_data = { '': ['README.md'] },
     install_requires=['rsa', 'requests'],
+    test_suite ='tests.requests_mauth_suite',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
@@ -28,6 +29,9 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ]

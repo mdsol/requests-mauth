@@ -5,6 +5,7 @@ import unittest
 from requests_mauth.client import MAuth
 import time
 from requests import Request
+import os
 
 
 class RequestMock(object):
@@ -20,7 +21,9 @@ class MAuthBaseTest(unittest.TestCase):
         self.app_id = "5ff4257e-9c16-11e0-b048-0026bbfffe5e"
 
         # Note, private key used here is just a dummy. Not registered to anythiung, cannot sign live requests.
-        example_private_key = open("test_mauth.priv.key",'r').read()
+        dir = os.path.dirname(__file__)
+        with open(os.path.join(dir, "test_mauth.priv.key"),'r') as f:
+            example_private_key = f.read()
         self.client = MAuth(self.app_id, example_private_key)
 
 
@@ -59,11 +62,10 @@ class TestStringToSign(MAuthBaseTest):
 class TestSign(MAuthBaseTest):
     def test_sign(self):
         """
-        Test that signing a string doesn't throw an error. Not checking validity of sign
+        Test that signing a string doesn't throw an error and signature correct
         """
         tested = self.client.signer.sign("Hello world")
-        self.assertNotEqual(tested, '') # Just making sure we get a result from above
-
+        self.assertEqual(tested, 'F/GAuGYEykrtrmIE/XtETSi0QUoKxUwwTXljT1tUiqNHmyH2NRhKQ1flqusaB7H6bwPBb+FzXzfmiO32lJs6SxMjltqM/FjwucVNhn1BW+KXFnZniPh3M0+FwwspksX9xc/KcWEPebtIIEM5cX2rBl43xlvwYtS/+D+obo1AVPv2l5qd+Gwl9b61kYF/aoPGx+bVnmWZK8e8BZxZOjjGjmQAOYRYgGWzolLLnzIZ6xy6efY3D9jPXXDqgnqWQvwLStkKJIydrkXUTd0m36X6mD00qHgI7xoYSLgqxNSg1EgO8yuette8BKl9D+YbIEJ3xFnaZmCfVGks0M9tmZ2PXg==')
 
 class TestMakeAuthHeaders(MAuthBaseTest):
     def test_headers(self):
@@ -86,7 +88,3 @@ class TestCall(MAuthBaseTest):
         authentication_header = r.headers['X-MWS-Authentication']
         header_app_id = authentication_header.split(':')[0]
         self.assertEqual('MWS ' + self.app_id, header_app_id)
-
-
-if __name__ == '__main__':
-    unittest.main()

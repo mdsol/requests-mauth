@@ -8,31 +8,42 @@ __author__ = 'isparks'
 
 from hashlib import sha512
 from rsa import common, core, transform, PrivateKey
+import base64
 
-#---- Original code from RSA ------------------------------------------------------------------------------------------
 
-def byte_literal(s):
-    return s
-
-b = byte_literal
-
-#----------------------------------------------------------------------------------------------------------------------
+def make_bytes(val):
+    """Ensure in python 2/3 we are working with bytes when we need to"""
+    try:
+        if isinstance(val, unicode):
+            return val.encode('US-ASCII')
+    except NameError:
+        if isinstance(val, bytes):
+            return val
+        elif isinstance(val, str):
+            return val.encode('US-ASCII')
+    return val
 
 
 class RSARawSigner(object):
     def __init__(self, private_key_data):
+        self.private_key_data = private_key_data
         self.pk = PrivateKey.load_pkcs1(private_key_data, 'PEM')
 
     def sign(self, string_to_sign):
         """Sign the data in a emulation of the OpenSSL private_encrypt method"""
-        hashed = sha512(string_to_sign.encode('US-ASCII')).hexdigest()
+        # Working in 2.7
+
+        string_to_sign = make_bytes(string_to_sign)
+        hashed = sha512(string_to_sign).hexdigest().encode('US-ASCII')
         keylength = common.byte_size(self.pk.n)
         padded = self.pad_for_signing(hashed, keylength)
-
+        padded = make_bytes(padded)
         payload = transform.bytes2int(padded)
         encrypted = core.encrypt_int(payload, self.pk.d,  self.pk.n)
-        signature = transform.int2bytes(encrypted, keylength).encode('base64').replace('\n','')
+        signature = transform.int2bytes(encrypted, keylength)
+        signature = base64.b64encode(signature).decode('US-ASCII').replace('\n','')
         return signature
+
 
     def pad_for_signing(self, message, target_length):
         r'''Pulled from rsa pkcs1.py,
@@ -64,7 +75,7 @@ class RSARawSigner(object):
 
         padding_length = target_length - msglength - 3
 
-        return b('').join([b('\x00\x01'),
-                        padding_length * b('\xff'),
-                        b('\x00'),
+        return b''.join([b'\x00\x01',
+                        padding_length * b'\xff',
+                        b'\x00',
                         message])

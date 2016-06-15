@@ -3,8 +3,14 @@ __author__ = 'isparks'
 
 import requests
 import time
-from rsa_sign import RSARawSigner
-from urlparse import urlparse
+from .rsa_sign import RSARawSigner
+
+# Python 2/3 differences
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
+
 
 class MAuth(requests.auth.AuthBase):
     """Custom requests authorizer for MAuth"""
@@ -61,7 +67,7 @@ class MAuth(requests.auth.AuthBase):
                     app_uid=self.app_uuid,
                     seconds_since_epoch=seconds_since_epoch)
 
-        string_to_sign = '{verb}\n{url_path}\n{body}\n{app_uid}\n{seconds_since_epoch!s}'.format(**vals)
+        string_to_sign = u'{verb}\n{url_path}\n{body}\n{app_uid}\n{seconds_since_epoch!s}'.format(**vals)
         return string_to_sign, seconds_since_epoch
 
 

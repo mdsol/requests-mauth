@@ -34,3 +34,7 @@ To use MAuth authentication you will need:
     if result.status_code == 200:
         print([r['uuid'] for r in result.json()['studies']])
     print(result.text)
+    
+Build Status
+------------
+* master - [![Build Status](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)

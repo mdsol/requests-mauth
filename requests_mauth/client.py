@@ -61,6 +61,9 @@ class MAuth(requests.auth.AuthBase):
         if seconds_since_epoch is None:
             seconds_since_epoch = int(time.time())
 
+        if isinstance(body, bytes):
+            body = body.decode('utf-8')
+
         vals = dict(verb=verb,
                     url_path=url_path,
                     body=body or '',

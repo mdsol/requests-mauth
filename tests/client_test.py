@@ -6,6 +6,7 @@ from requests_mauth.client import MAuth
 import time
 from requests import Request
 import os
+import json
 
 
 class RequestMock(object):
@@ -43,6 +44,19 @@ class TestStringToSign(MAuthBaseTest):
 
         # Test we got the epoch we put in, back again
         self.assertEqual(tested[1],epoch)
+
+    def test_string_to_sign_binary_body(self):
+        expected = "GET" + "\n" \
+            + "/studies/123/users" + "\n" \
+            +'{"key": "data"}\n' \
+            + self.app_id \
+            + "\n" \
+            +  "1309891855"
+
+        epoch = 1309891855
+        mr = RequestMock("GET","/studies/123/users",json.dumps( { 'key': 'data' } ).encode('utf8'))
+        tested = self.client.make_signature_string(mr.method, mr.url, mr.body, seconds_since_epoch=epoch)
+        self.assertEqual(tested[0], expected)
 
     def test_string_to_sign_no_epoch(self):
         """Test that epoch is supplied for us if we don't"""

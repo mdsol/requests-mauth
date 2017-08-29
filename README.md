@@ -83,7 +83,13 @@ To setup your environment:
    ```
 1. Coverage report can be viewed using `open htmlcov/index.html`
 1. Push your changes and create a PR to `master`
-
+1. Once the PR is complete, tag the branch and push it to github, this will trigger Travis to deploy to PyPI (make sure the version is consistent)
+   ```bash
+   $ git checkout master
+   $ git pull
+   $ git tag -a 1.0.2 -m "Requests MAuth 1.0.2"
+   $ git push --tags
+   ```
 
 Build Status
 ------------

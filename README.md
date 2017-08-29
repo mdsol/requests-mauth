@@ -38,7 +38,7 @@ To use MAuth authentication you will need:
 Development
 -----------
 We use [travis](https://travisci.com) for automated CI of the code (and status checks are required to pass prior to PR merges being accepted).  
-We use travis to deploy updated versions to PyPI
+We use travis to deploy updated versions to PyPI (only from `master`)
 
 For local development (cross version) we use [tox](http://tox.readthedocs.io/en/latest/) with [pyenv](https://github.com/pyenv/pyenv)    
 

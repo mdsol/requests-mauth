@@ -81,6 +81,13 @@ class TestSign(MAuthBaseTest):
         tested = self.client.signer.sign("Hello world")
         self.assertEqual(tested, 'F/GAuGYEykrtrmIE/XtETSi0QUoKxUwwTXljT1tUiqNHmyH2NRhKQ1flqusaB7H6bwPBb+FzXzfmiO32lJs6SxMjltqM/FjwucVNhn1BW+KXFnZniPh3M0+FwwspksX9xc/KcWEPebtIIEM5cX2rBl43xlvwYtS/+D+obo1AVPv2l5qd+Gwl9b61kYF/aoPGx+bVnmWZK8e8BZxZOjjGjmQAOYRYgGWzolLLnzIZ6xy6efY3D9jPXXDqgnqWQvwLStkKJIydrkXUTd0m36X6mD00qHgI7xoYSLgqxNSg1EgO8yuette8BKl9D+YbIEJ3xFnaZmCfVGks0M9tmZ2PXg==')
 
+    def test_sign_unicode(self):
+        """
+        Test that signing a string with non-ASCII characters doesn't throw an error and signature correct
+        """
+        tested = self.client.signer.sign("こんにちはÆ")
+        self.assertEqual(tested, 'cHrT3G7zCA2aRcY5jtvNlm0orafBOn924rQ9aSQS1lvNCwbg/LMnTsV+jHZUtOyDFSvErBwd9ga1FrsjOQDfhNoU1K+pVQ11nHU23cHQi0bsYByKPIDh1jMW4wNtP+A7Z/Xh0CIESBc+SaeIjPznMunocwci34kN4AXWudkZ2+xZxqfZiX6TVrwmREppsgoZD2ODVt6FtnBvcGd0sRAa9A3Iy+EaB8wOM5kaUyusfGcxeCYuCGN1FHjd1AkBkm2I4wbsxQInKDyYQXjMv3fA5oMw4nxhL/AJzUx3xWWCG5pub1/YB3jWwQgtGjpxvb5LhHT9S/JtuT8RU01JukC8dQ==')
+
 class TestMakeAuthHeaders(MAuthBaseTest):
     def test_headers(self):
         """Test making of auth headers"""

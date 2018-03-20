@@ -2,5 +2,5 @@
 __author__ = 'isparks'
 
 from .client import MAuth
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 

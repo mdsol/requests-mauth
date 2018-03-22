@@ -14,12 +14,12 @@ def make_bytes(val):
     """Ensure in python 2/3 we are working with bytes when we need to"""
     try:
         if isinstance(val, unicode):
-            return val.encode('US-ASCII')
+            return val.encode('utf-8')
     except NameError:
         if isinstance(val, bytes):
             return val
         elif isinstance(val, str):
-            return val.encode('US-ASCII')
+            return val.encode('utf-8')
     return val
 
 

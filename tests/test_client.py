@@ -114,3 +114,27 @@ class TestCall(MAuthBaseTest):
         authentication_header = r.headers['X-MWS-Authentication']
         header_app_id = authentication_header.split(':')[0]
         self.assertEqual('MWS ' + self.app_id, header_app_id)
+
+
+class TestAddImpersonatedUser(unittest.TestCase):
+    """Add User impersonation"""
+
+    def setUp(self):
+        self.app_id = "5ff4257e-9c16-11e0-b048-0026bbfffe5e"
+
+        # Note, private key used here is just a dummy. Not registered to anythiung, cannot sign live requests.
+        dir = os.path.dirname(__file__)
+        with open(os.path.join(dir, "test_mauth.priv.key"), 'r') as f:
+            self.example_private_key = f.read()
+
+    def test_add_user_impersonation_header(self):
+        """We add the expected Impersonation Header"""
+        user_uuid = 'c77dfbc4-f3e2-4757-8fe2-721cd6260b69'
+        client = MAuth(self.app_id, self.example_private_key, user_uuid=user_uuid)
+        url = "https://innovate.imedidata.com/api/v2/users/%s/studies.json" % user_uuid
+        r = Request('GET', url, auth=client).prepare()
+        impersonation_header = r.headers['MCC-Impersonate']
+        self.assertEqual('com:mdsol:users:c77dfbc4-f3e2-4757-8fe2-721cd6260b69', impersonation_header)
+        authentication_header = r.headers['X-MWS-Authentication']
+        header_app_id = authentication_header.split(':')[0]
+        self.assertEqual('MWS ' + self.app_id, header_app_id)

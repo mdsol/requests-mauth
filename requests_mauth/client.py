@@ -14,9 +14,10 @@ except ImportError:
 
 class MAuth(requests.auth.AuthBase):
     """Custom requests authorizer for MAuth"""
-    def __init__(self, app_uuid, private_key_data):
+    def __init__(self, app_uuid, private_key_data, user_uuid=None):
         self.app_uuid = app_uuid
         self.signer = RSARawSigner(private_key_data)
+        self.user_uuid = user_uuid
 
     def __call__(self, r):
         """Call override, the entrypoint for a custom auth object"""
@@ -30,6 +31,16 @@ class MAuth(requests.auth.AuthBase):
         signature, secs = self.make_signature_string(r.method, url_path, r.body)
         signed = self.signer.sign(signature)
         headers = self.make_authentication_headers(signed, secs)
+        if self.user_uuid:
+            headers = self.make_impersonation_header(headers)
+        return headers
+
+    def make_impersonation_header(self, headers):
+        """
+        Adds the Impersonation Header
+        :return:
+        """
+        headers['MCC-Impersonate'] = 'com:mdsol:users:{}'.format(self.user_uuid)
         return headers
 
     def make_authentication_headers(self, signed_string, seconds_since_epoch):

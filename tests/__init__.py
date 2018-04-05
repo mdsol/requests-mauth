@@ -2,9 +2,9 @@
 __author__ = 'isparks'
 
 import unittest
-from . import client_test
+from . import test_client
 
 def requests_mauth_suite():
     loader = unittest.TestLoader()
-    suite = loader.loadTestsFromModule(client_test)
+    suite = loader.loadTestsFromModule(test_client)
     return suite

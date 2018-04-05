@@ -10,7 +10,6 @@ To use MAuth authentication you will need:
 * An MAuth APP ID
 * An MAuth private key (with the public key registered with Medidata's MAuth server)
 
-
 ## Using ##
 
     import requests
@@ -35,6 +34,22 @@ To use MAuth authentication you will need:
         print([r['uuid'] for r in result.json()['studies']])
     print(result.text)
 
+## User Impersonation ##
+
+A user can be impersonated using the optional `user_uuid` argument to the client instantiation, this will add th
+
+```python
+
+    import requests
+    from requests_mauth import MAuth
+
+    APP_UUID = '55dc88ec-c109-11e1-84f6-1231381b7d70'
+    private_key = open("private.key","r").read()
+    user_uuid = '10ac3b0e-9fe2-11df-a531-12313900d531'
+    mauth = MAuth(APP_UUID, private_key, user_uuid=user_uuid)
+
+```
+
 Development
 -----------
 We use [travis](https://travisci.com) for automated CI of the code (and status checks are required to pass prior to PR merges being accepted).  
@@ -49,9 +64,9 @@ To setup your environment:
    $ brew update
    $ brew install pyenv
    ```
-1. Install Pyenv versions for the Tox Suite
+1. Install Pyenv versions for the Tox Suite (note that some of these will have changed _ad interim_)
    ```bash
-   $ pyenv install 2.7.13 3.3.6 3.4.6 3.5.3 3.6.1
+   $ pyenv install 2.7.13 3.4.6 3.5.3 3.6.1
    ```
 1. Install Tox 
    ```bash
@@ -59,7 +74,7 @@ To setup your environment:
    ```
 1. Setup the local project versions (one for each env in the `envlist`)
    ```bash
-    $ pyenv local 2.7.13 3.3.6 3.4.6 3.5.3 3.6.1 
+    $ pyenv local 2.7.13 3.4.6 3.5.3 3.6.1
    ```
 1. Make any changes, update the tests and then run tests with `tox`
    ```bash
@@ -74,7 +89,6 @@ To setup your environment:
     _________________________________________________________________________________________________________ summary __________________________________________________________________________________________________________
       clean: commands succeeded
       py27: commands succeeded
-      py33: commands succeeded
       py34: commands succeeded
       py35: commands succeeded
       py36: commands succeeded
@@ -94,3 +108,4 @@ To setup your environment:
 Build Status
 ------------
 * master - [![Build Status](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)
+

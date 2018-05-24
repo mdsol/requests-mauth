@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Mauth Authenticator for Requests'
-copyright = '2018, Ian Sparks'
-author = 'Ian Sparks'
+copyright = '2018, Medidata'
+author = 'Medidata'
 
 
 def get_version():

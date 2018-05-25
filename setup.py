@@ -10,8 +10,8 @@ version = re.search("__version__ = '([^']+)'", init).group(1)
 setup(
     name='requests_mauth',
     version=version,
-    author='Ian Sparks',
-    author_email='isparks@mdsol.com',
+    author='Medidata Solutions',
+    author_email='support@mdsol.com',
     packages=['requests_mauth'],
     url='https://github.com/mdsol/requests-mauth',
     license='MIT',

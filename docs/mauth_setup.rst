@@ -1,6 +1,8 @@
 Setting Up a MAuth Application
 ==============================
+
 .. _create_a_mauth_app:
+
 1. Create a keyset::
 
     $ mkdir keypair_dir

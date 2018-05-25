@@ -149,7 +149,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'MauthAuthenticatorforRequests.tex', 'Mauth Authenticator for Requests Documentation',
-     'Ian Sparks', 'manual'),
+     author, 'manual'),
 ]
 
 

@@ -14,6 +14,8 @@ Welcome to Mauth Authenticator for Requests's documentation!
 
    getting_started
    mauth_setup
+   examples
+
 
 .. _Requests: http://docs.python-requests.org/en/master/
 

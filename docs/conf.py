@@ -29,8 +29,8 @@ def get_version():
     Get the Product version
     :return:
     """
-    import pkg_resources
-    release = pkg_resources.get_distribution('requests_mauth').version
+    import requests_mauth
+    release = requests_mauth.__version__
     return release, '.'.join(release.split('.')[0:1])
 
 

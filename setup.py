@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-
+import re
 
 from setuptools import setup
 
-import requests_mauth
+init = open('requests_mauth/__init__.py').read()
+version = re.search("__version__ = '([^']+)'", init).group(1)
 
 setup(
     name='requests_mauth',
-    version=requests_mauth.__version__,
+    version=version,
     author='Medidata Solutions',
     author_email='support@mdsol.com',
     packages=['requests_mauth'],

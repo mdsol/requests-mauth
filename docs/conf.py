@@ -12,9 +12,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 
 # -- Project information -----------------------------------------------------
@@ -29,8 +29,9 @@ def get_version():
     Get the Product version
     :return:
     """
-    import requests_mauth
-    release = requests_mauth.__version__
+    import re
+    init = open('../requests_mauth/__init__.py').read()
+    release = re.search("__version__ = '([^']+)'", init).group(1)
     return release, '.'.join(release.split('.')[0:1])
 
 

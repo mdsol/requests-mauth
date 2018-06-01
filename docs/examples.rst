@@ -37,7 +37,7 @@ Note the extracted method `generate_signer` for creating a MAuth Request signer 
         :param str user_uuid: UUID for user
         """
         mauth_signer = generate_signer(**configuration)
-        base_url = "https://innovate.imedidata.com"
+        base_url = "https://www.imedidata.com"
         api_path = f"api/v2/users/{user_uuid}.json"
         full_url = base_url + "/" + api_path
         response = requests.get(full_url, auth=mauth_signer)
@@ -77,7 +77,7 @@ In this example we use the MAuth signer to access the underlying Countries API e
         Get the list of countries from the API GW
         :param dict configuration: a configuration dictionary
         """
-        full_url = "https://apigw.imedidata.com/v1/countries"
+        full_url = "https://api.imedidata.com/v1/countries"
         mauth_signer = generate_signer(**configuration)
         session = requests.Session()
         session.auth = mauth_signer

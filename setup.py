@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-__author__ = 'isparks'
-
 import re
+
 from setuptools import setup
 
 init = open('requests_mauth/__init__.py').read()
@@ -17,11 +16,12 @@ setup(
     license='MIT',
     description="An MAuth client based around the excellent requests library.",
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     zip_safe=False,
     include_package_data=True,
-    package_data = { '': ['README.md'] },
+    package_data={'': ['README.md']},
     install_requires=['rsa', 'requests'],
-    test_suite ='tests.requests_mauth_suite',
+    test_suite='tests.requests_mauth_suite',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

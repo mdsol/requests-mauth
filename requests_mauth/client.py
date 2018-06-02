@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-__author__ = 'isparks'
 
 import requests
 import time
@@ -21,14 +20,14 @@ class MAuth(requests.auth.AuthBase):
         """
         Create a new MAuth Instance
 
-        :param str app_uuid: APP UUID for the application/user
+        :param str app_uuid: The Application UUID (or APP_UUID) for the application
         :param str private_key_data: Content of the Private Key File
         """
         self.app_uuid = app_uuid
         self.signer = RSARawSigner(private_key_data)
 
     def __call__(self, r):
-        """Call override, the entrypoint for a custom auth object
+        """Call override, the entry point for a custom auth object
 
         :param requests.models.PreparedRequest r: the Request object
         """
@@ -51,19 +50,19 @@ class MAuth(requests.auth.AuthBase):
         """Makes headers of the form
         ::
 
-            x-mws-authentication: MWS {app_id}:{signed_string}
+            x-mws-authentication: MWS {app_uuid}:{signed_string}
             x-mws-time: {time_since_epoch}
 
         :param str signed_string: The signed string for the header
         :param int seconds_since_epoch: The number of seconds since the Epoch
         """
-        return {'X-MWS-Authentication' : 'MWS %s:%s' % (self.app_uuid,signed_string,),
-                'X-MWS-Time' : str(seconds_since_epoch),
+        return {'X-MWS-Authentication': 'MWS %s:%s' % (self.app_uuid, signed_string,),
+                'X-MWS-Time': str(seconds_since_epoch),
                 'Content-Type': 'application/json;charset=utf-8',
                 }
 
-    def make_signature_string(self,  verb, url_path, body, seconds_since_epoch=None):
-        """Makes a signature string for signing of the form:
+    def make_signature_string(self, verb, url_path, body, seconds_since_epoch=None):
+        """Makes a signature string for signing a request; the request is expected to be of the form:
         ::
 
             string_to_sign =
@@ -100,5 +99,3 @@ class MAuth(requests.auth.AuthBase):
 
         string_to_sign = u'{verb}\n{url_path}\n{body}\n{app_uid}\n{seconds_since_epoch!s}'.format(**vals)
         return string_to_sign, seconds_since_epoch
-
-

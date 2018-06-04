@@ -50,7 +50,7 @@ Note the extracted method `generate_signer` for creating a MAuth Request signer 
 Using the API Gateway
 ---------------------
 
-In this example we use the MAuth signer to access the underlying Countries API endpoint
+In this example we use the MAuth signer to access the underlying Medidata Countries API endpoint
 
 .. code-block:: python
 

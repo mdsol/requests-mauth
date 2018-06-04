@@ -74,7 +74,7 @@ In this example we use the MAuth signer to access the underlying Countries API e
 
     def get_countries(configuration):
         """
-        Get the list of countries from the API GW
+        Get the list of countries from the Medidata API
         :param dict configuration: a configuration dictionary
         """
         full_url = "https://api.mdsol.com/v1/countries"

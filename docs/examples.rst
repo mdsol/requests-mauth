@@ -25,7 +25,7 @@ Note the extracted method `generate_signer` for creating a MAuth Request signer 
         :return:
         """
         if not private_key_string:
-            auth = MAuth(app_uuid, open(private_key_file, 'r').read())
+            auth = MAuth(app_uuid, open(private_key_file, "r").read())
         else:
             auth = MAuth(app_uuid, private_key_string)
         return auth
@@ -67,20 +67,24 @@ In this example we use the MAuth signer to access the underlying Countries API e
         :return:
         """
         if not private_key_string:
-            auth = MAuth(app_uuid, open(private_key_file, 'r').read())
+            auth = MAuth(app_uuid, open(private_key_file, "r").read())
         else:
             auth = MAuth(app_uuid, private_key_string)
         return auth
 
     def get_countries(configuration):
         """
-        Get the list of countries from the API GW
+        Get the list of countries from the API GW for a specific API version
         :param dict configuration: a configuration dictionary
         """
-        full_url = "https://api.mdsol.com/v1/countries"
+        full_url = "https://api.mdsol.com/countries"
+        headers = {"Accept": "application/json", "Mcc-Version": "v2019-03-22"}
         mauth_signer = generate_signer(**configuration)
+
         session = requests.Session()
         session.auth = mauth_signer
+        session.headers = headers
+
         response = session.get(full_url)
         if response.status_code == 200:
             return response.json()
@@ -108,7 +112,7 @@ In this example we add the headers to allow the Application to impersonate a use
         :return:
         """
         if not private_key_string:
-            auth = MAuth(app_uuid, open(private_key_file, 'r').read())
+            auth = MAuth(app_uuid, open(private_key_file, "r").read())
         else:
             auth = MAuth(app_uuid, private_key_string)
         return auth
@@ -123,7 +127,7 @@ In this example we add the headers to allow the Application to impersonate a use
         mauth_signer = generate_signer(**configuration)
         session = requests.Session()
         session.auth = mauth_signer
-        session.headers['MCC-Impersonate'] = 'com:mdsol:users:{}'.format(user_uuid)
+        session.headers["MCC-Impersonate"] = "com:mdsol:users:{}".format(user_uuid)
         response = session.post(full_url)
         if response.status_code in (200, 201):
             print("Request on behalf of {} successful".format(user_uuid))

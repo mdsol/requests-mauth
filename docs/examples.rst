@@ -77,9 +77,10 @@ In this example we use the MAuth signer to access the underlying Countries API e
         Get the list of countries from the API GW
         :param dict configuration: a configuration dictionary
         """
-        full_url = "https://api.mdsol.com/v1/countries"
+        full_url = "https://api.mdsol.com/countries"
         mauth_signer = generate_signer(**configuration)
         session = requests.Session()
+        session.headers.update({"Mcc-version": "v2019-03-22"})
         session.auth = mauth_signer
         response = session.get(full_url)
         if response.status_code == 200:

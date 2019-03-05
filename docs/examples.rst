@@ -120,11 +120,12 @@ In this example we add the headers to allow the Application to impersonate a use
         :param dict configuration: a configuration dictionary
         :param str user_uuid: a User UUID per the platform
         """
-        full_url = "https://mcc.example.org/v1/service"
+        full_url = "https://mcc.example.org/service"
         mauth_signer = generate_signer(**configuration)
         session = requests.Session()
         session.auth = mauth_signer
         session.headers['MCC-Impersonate'] = 'com:mdsol:users:{}'.format(user_uuid)
+        session.headers['Mcc-version'] = 'v2019-03-22'
         response = session.post(full_url)
         if response.status_code in (200, 201):
             print("Request on behalf of {} successful".format(user_uuid))

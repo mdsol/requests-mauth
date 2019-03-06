@@ -1,6 +1,6 @@
 # requests-mauth
 
-[![Build Status](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)
+[![Build Status](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)](https://travis-ci.org/mdsol/requests-mauth)
 
 requests-mauth is a python requests (http://docs.python-requests.org/en/latest/) Authentication implementation
 for Medidata's _MAuth_ authentication system.
@@ -41,7 +41,7 @@ print(result.text)
 
 ## Development
 
-We use [travis](https://travisci.com) for automated CI of the code (and status checks are required to pass prior to PR merges being accepted).
+We use [travis](https://travis-ci.org) for automated CI of the code (and status checks are required to pass prior to PR merges being accepted).
 We use travis to deploy updated versions to PyPI (only from `master`)
 
 For local development (cross version) we use [tox](http://tox.readthedocs.io/en/latest/) with [pyenv](https://github.com/pyenv/pyenv) to automate the running of unit tests against different python versions in virtualised python environments.

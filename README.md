@@ -55,7 +55,7 @@ To setup your environment:
    ```
 1. Install Pyenv versions for the Tox Suite
    ```bash
-   $ pyenv install 2.7.13 3.3.6 3.4.6 3.5.3 3.6.1
+   $ pyenv install 2.7.16 3.3.6 3.4.6 3.5.3 3.6.1 3.7.2
    ```
 1. Install Tox
    ```bash
@@ -63,7 +63,7 @@ To setup your environment:
    ```
 1. Setup the local project versions (one for each env in the `envlist`)
    ```bash
-    $ pyenv local 2.7.13 3.3.6 3.4.6 3.5.3 3.6.1
+    $ pyenv local 2.7.16 3.3.6 3.4.6 3.5.3 3.6.1 3.7.2
    ```
 1. Make any changes, update the tests and then run tests with `tox`
    ```bash

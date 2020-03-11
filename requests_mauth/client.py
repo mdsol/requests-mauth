@@ -57,8 +57,7 @@ class MAuth(requests.auth.AuthBase):
         :param int seconds_since_epoch: The number of seconds since the Epoch
         """
         return {'X-MWS-Authentication': 'MWS %s:%s' % (self.app_uuid, signed_string,),
-                'X-MWS-Time': str(seconds_since_epoch),
-                'Content-Type': 'application/json;charset=utf-8',
+                'X-MWS-Time': str(seconds_since_epoch)
                 }
 
     def make_signature_string(self, verb, url_path, body, seconds_since_epoch=None):

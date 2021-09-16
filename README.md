@@ -1,6 +1,6 @@
 # requests-mauth
 
-[![Build Status](https://travis-ci.org/mdsol/requests-mauth.svg?branch=master)](https://travis-ci.org/mdsol/requests-mauth)
+**NOTE** This repository is deprecated, you should be using [mauth-client-python](https://github.com/mdsol/mauth-client-python).  It will be archived.
 
 requests-mauth is a python requests (http://docs.python-requests.org/en/latest/) Authentication implementation
 for Medidata's _MAuth_ authentication system.
